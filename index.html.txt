@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عطر کاسٹنگ کیلکولیٹر</title>
+    <style>
+        body {
+            font-family: 'Jameel Noori Nastaleeq', Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .calculator-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .result-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+        .total-item {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #ccc;
+            font-size: 20px;
+            font-weight: bold;
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator-container">
+    <h2>عطر کاسٹنگ کیلکولیٹر</h2>
+
+    <label for="fragrance">عطر کا انتخاب کریں (50ml کے حساب سے):</label>
+    <select id="fragrance" onchange="calculateCost()">
+        <option value="2750">سلک مسک (2750 روپے)</option>
+        <option value="1320">بکارات (1320 روپے)</option>
+        <option value="1760">وائٹ عود (1760 روپے)</option>
+        <option value="1820">سلور کریڈ (1820 روپے)</option>
+        <option value="1280">سواج (1280 روپے)</option>
+        <option value="860">ڈنھل ڈیزائنڈ (860 روپے)</option>
+        <option value="960">فوگ (960 روپے)</option>
+        <option value="830">سکائی بلو (830 روپے)</option>
+        <option value="830">صبایا (830 روپے)</option>
+        <option value="1130">حُسنِ یوسف (1130 روپے)</option>
+        <option value="910">غلافِ کعبہ (910 روپے)</option>
+    </select>
+
+    <label for="bottle">شیشی کا انتخاب کریں:</label>
+    <select id="bottle" onchange="calculateCost()">
+        <option value="17.5" data-vol="3">سادہ گولڈن 3ml (17.5 روپے)</option>
+        <option value="60" data-vol="3">سکس سائیڈ 3ml (60 روپے)</option>
+        <option value="24.17" data-vol="6">سادہ گولڈن 6ml (24.17 روپے)</option>
+        <option value="75" data-vol="6">کلر زری 6ml (75 روپے)</option>
+    </select>
+
+    <div class="result-box">
+        <div class="result-item">
+            <span>خوشبو کی قیمت:</span>
+            <span id="perfumeCost">0 روپے</span>
+        </div>
+        <div class="result-item">
+            <span>شیشی کی قیمت:</span>
+            <span id="bottleCost">0 روپے</span>
+        </div>
+        <div class="result-item">
+            <span>کوریئر چارجز (4.6%):</span>
+            <span id="courierCost">0 روپے</span>
+        </div>
+        <div class="total-item">
+            <span>مکمل لاگت:</span>
+            <span id="grandTotal">0 روپے</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateCost() {
+        const fragranceSelect = document.getElementById("fragrance");
+        const bottleSelect = document.getElementById("bottle");
+        
+        const price50ml = parseFloat(fragranceSelect.value);
+        const bottleCost = parseFloat(bottleSelect.value);
+        const volume = parseFloat(bottleSelect.options[bottleSelect.selectedIndex].getAttribute("data-vol"));
+        
+        // حساب
+        const perfumeCost = (price50ml / 50) * volume;
+        const totalBeforeCourier = perfumeCost + bottleCost;
+        const courierCost = totalBeforeCourier * 0.04604;
+        const grandTotal = Math.round(totalBeforeCourier + courierCost);
+
+        // نتائج دکھائیں
+        document.getElementById("perfumeCost").innerText = perfumeCost.toFixed(2) + " روپے";
+        document.getElementById("bottleCost").innerText = bottleCost.toFixed(2) + " روپے";
+        document.getElementById("courierCost").innerText = courierCost.toFixed(2) + " روپے";
+        document.getElementById("grandTotal").innerText = grandTotal + " روپے";
+    }
+
+    // صفحہ لوڈ ہونے پر پہلی بار حساب کریں
+    window.onload = calculateCost;
+</script>
+
+</body>
+</html>
